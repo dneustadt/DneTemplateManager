@@ -3,7 +3,7 @@
         "title": "Custom Template Manager",
         "nameLabel": "Path",
         "searchLabel": "Search",
-        "contentLabel": "Custom template content",
+        "contentLabel": "Custom template content for",
         "originalContentLabel": "Original template content",
         "saveButton": "Save",
         "deleteButton": "Delete",

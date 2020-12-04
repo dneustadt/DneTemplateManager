@@ -2,7 +2,7 @@
     <sw-card-view>
         <sw-card v-if="item" :isLoading="isLoading">
             <sw-code-editor
-                    :label="$t('dne-template-manager.contentLabel')"
+                    :label="`${$t('dne-template-manager.contentLabel')} ${item.path}`"
                     name="content"
                     identifier="content"
                     completionMode="entity"
