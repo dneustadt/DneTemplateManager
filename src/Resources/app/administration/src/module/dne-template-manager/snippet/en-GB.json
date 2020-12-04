@@ -1,0 +1,13 @@
+{
+    "dne-template-manager": {
+        "title": "Custom Template Manager",
+        "nameLabel": "Path",
+        "contentLabel": "Custom template content",
+        "originalContentLabel": "Original template content",
+        "saveButton": "Save",
+        "deleteButton": "Delete",
+        "cancelButton": "Cancel",
+        "deleteWarning": "Are you sure you want to delete the custom template?",
+        "donateText": "Click here to support this free extension or if you want to buy me a cup of coffee"
+    }
+}

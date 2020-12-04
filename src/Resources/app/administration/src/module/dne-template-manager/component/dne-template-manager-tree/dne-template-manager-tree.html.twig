@@ -1,0 +1,25 @@
+<sw-data-grid
+        :dataSource="getItems"
+        :columns="columns"
+        :fullPage="false"
+        :showSettings="false"
+        :showSelection="false"
+        :showActions="false"
+        :isLoading="isLoading"
+        :allowColumnEdit="false"
+        :allowInlineEdit="false"
+        class="dne-template-manager">
+    <template #column-name="{ item }">
+        <a
+            href="#"
+            @click.prevent="changeItem(item)"
+        >
+            <template v-if="item.custom === 1">
+                <strong>{{ item.name }}</strong>
+            </template>
+            <template v-else>
+                {{ item.name }}
+            </template>
+        </a>
+    </template>
+</sw-data-grid>

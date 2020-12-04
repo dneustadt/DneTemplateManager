@@ -1,0 +1,8 @@
+{
+    "name": "dnetemplatemanager",
+    "version": "1.0.0",
+    "description": "Custom Template Manager",
+    "main": "main.js",
+    "author": "David Neustadt",
+    "license": "MIT"
+}

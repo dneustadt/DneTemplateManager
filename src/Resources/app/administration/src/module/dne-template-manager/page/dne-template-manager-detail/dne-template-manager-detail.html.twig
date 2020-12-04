@@ -1,0 +1,58 @@
+{% block dne_template_manager_detail %}
+    <sw-card-view>
+        <sw-card v-if="item" :isLoading="isLoading">
+            <sw-code-editor
+                    :label="$t('dne-template-manager.contentLabel')"
+                    name="content"
+                    identifier="content"
+                    completionMode="entity"
+                    v-model="item.content">
+            </sw-code-editor>
+
+            <sw-button
+                    :isLoading="isLoading"
+                    variant="primary"
+                    @click="onClickSave">
+                {{ $t('dne-template-manager.saveButton') }}
+            </sw-button>
+
+            <sw-button
+                :isLoading="isLoading"
+                variant="secondary"
+                @click="deleteModal = true">
+                {{ $t('dne-template-manager.deleteButton') }}
+            </sw-button>
+
+            <sw-modal v-if="deleteModal"
+                      @modal-close="deleteModal = false"
+                      :title="$tc('global.default.warning')"
+                      variant="small">
+                <p>
+                    {{ $tc('dne-template-manager.deleteWarning') }}
+                </p>
+
+                <template #modal-footer>
+                    <sw-button @click="deleteModal = false" size="small">
+                        {{ $tc('dne-template-manager.cancelButton') }}
+                    </sw-button>
+
+                    <sw-button @click="onClickDelete" variant="danger" size="small">
+                        {{ $tc('dne-template-manager.deleteButton') }}
+                    </sw-button>
+                </template>
+            </sw-modal>
+        </sw-card>
+        <sw-card v-if="item" :isLoading="isLoading">
+            <sw-code-editor
+                :label="$t('dne-template-manager.originalContentLabel')"
+                :disabled="true"
+                v-model="item.originalContent">
+            </sw-code-editor>
+        </sw-card>
+        <sw-card>
+            <a href="https://github.com/dneustadt/DneTemplateManager" target="_blank">
+                {{ $t('dne-template-manager.donateText') }}
+            </a>
+        </sw-card>
+    </sw-card-view>
+{% endblock %}
