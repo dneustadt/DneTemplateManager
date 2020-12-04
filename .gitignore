@@ -1,4 +1,4 @@
 vendor
 phpstan.neon
-src/Resources/views/storefront
+src/Resources/views/storefront/*
 !src/Resources/views/storefront/.gitkeep
