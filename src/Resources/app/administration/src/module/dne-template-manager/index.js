@@ -26,9 +26,9 @@ Module.register('dne-template-manager', {
 
     navigation: [{
         label: 'dne-template-manager.title',
-        color: '#00acd2',
+        color: '#acd200',
         path: 'dne.template.manager.list',
-        icon: 'default-text-code',
+        icon: 'default-web-layout',
         position: 100
     }]
 });
