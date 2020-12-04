@@ -2,6 +2,7 @@
     "dne-template-manager": {
         "title": "Custom Template Manager",
         "nameLabel": "Path",
+        "searchLabel": "Search",
         "contentLabel": "Custom template content",
         "originalContentLabel": "Original template content",
         "saveButton": "Save",

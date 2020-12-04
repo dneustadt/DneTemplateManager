@@ -9,7 +9,8 @@ Component.register('dne-template-manager-tree', {
     data() {
         return {
             items: {},
-            isLoading: true
+            isLoading: true,
+            searchText: ''
         };
     },
 
@@ -24,6 +25,12 @@ Component.register('dne-template-manager-tree', {
 
     computed: {
         getItems() {
+            if (this.searchText.length) {
+                return Object.values(this.items).filter((item) => {
+                    return item.name.indexOf(this.searchText) !== -1;
+                });
+            }
+
             return Object.values(this.items);
         },
         columns() {

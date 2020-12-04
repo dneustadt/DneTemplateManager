@@ -22,4 +22,14 @@
             </template>
         </a>
     </template>
+    <template #column-label-name>
+        <span>
+            {{ $t('dne-template-manager.nameLabel') }}
+        </span>
+        <sw-field
+            v-model="searchText"
+            type="text"
+            :placeholder="$t('dne-template-manager.searchLabel')"
+        ></sw-field>
+    </template>
 </sw-data-grid>
