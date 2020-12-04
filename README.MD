@@ -35,5 +35,5 @@ The module will be accessible in backend by a new menu entry called _Custom Temp
 Regarding proper syntax and inheritance within template extensions please see the
 [official documentation](https://docs.shopware.com/en/shopware-platform-dev-en/developer-guide/storefront/templates?category=shopware-platform-dev-en/developer-guide/storefront).
 
-Custom templates are saved in `${SHOPWARE_ROOT}/custom/plugins/DneTemplateManager/src/Resources/views/storefront`. It is possible to backup
+Custom templates are saved in `${SHOPWARE_ROOT}/custom/plugins/.customTemplate/storefront`. It is possible to backup
 or transfer the contents of that folder for use in themes or other Shopware installations.

@@ -2,11 +2,16 @@
 
 namespace Dne\TemplateManager;
 
-use Dne\TemplateManager\Components\CompilerPass\ReplaceThemeCompilerPass;
+use Dne\TemplateManager\CompilerPass\ThemeLoaderCompilerPass;
 use Shopware\Core\Framework\Plugin;
-use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DneTemplateManager extends Plugin
 {
+    public function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new ThemeLoaderCompilerPass());
+
+        parent::build($container);
+    }
 }

@@ -14,13 +14,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class TemplateManagerController extends AbstractController
 {
     /**
-     * @var iterable
+     * @var string|null
      */
-    private $bundles;
+    private $baseTemplateRoot = null;
+
+    /**
+     * @var string|null
+     */
+    private $customTemplateRoot = null;
 
     public function __construct($bundles)
     {
-        $this->bundles = $bundles;
+        if (!empty($bundles['Storefront']) && !empty($bundles['DneTemplateManager'])) {
+            $this->baseTemplateRoot = $bundles['Storefront']['path'] . '/Resources/views/storefront';
+            $this->customTemplateRoot = $bundles['DneTemplateManager']['path'] . '/../../.customTemplate/storefront';
+        }
     }
 
     /**
@@ -30,22 +38,15 @@ class TemplateManagerController extends AbstractController
     {
         $data = [];
 
-        if (!empty($this->bundles['Storefront']) && !empty($this->bundles['DneTemplateManager'])) {
-            $baseTemplateRoot = $this->bundles['Storefront']['path'] . '/Resources/views/storefront';
-            $customTemplatesRoot = $this->bundles['DneTemplateManager']['path'] . '/Resources/views/storefront';
-
+        if (!empty($this->baseTemplateRoot) && !empty($this->customTemplateRoot)) {
             $baseTemplates = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($baseTemplateRoot)
-            );
-
-            $customTemplates = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($customTemplatesRoot)
+                new \RecursiveDirectoryIterator($this->baseTemplateRoot)
             );
 
             $data = [];
 
             foreach($baseTemplates as $pathName => $baseTemplate) {
-                $namespace = str_replace($baseTemplateRoot, '', $pathName);
+                $namespace = str_replace($this->baseTemplateRoot, '', $pathName);
 
                 if (
                     !$baseTemplate->isFile() ||
@@ -62,22 +63,28 @@ class TemplateManagerController extends AbstractController
                 ];
             }
 
-            foreach($customTemplates as $pathName => $customTemplate) {
-                $namespace = str_replace($customTemplatesRoot, '', $pathName);
+            if (file_exists($this->customTemplateRoot)) {
+                $customTemplates = new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($this->customTemplateRoot)
+                );
 
-                if (
-                    !$customTemplate->isFile() ||
-                    substr(basename($pathName), 0, 1) === '.' ||
-                    (!empty($name) && $name !== $namespace)
-                ) {
-                    continue;
+                foreach($customTemplates as $pathName => $customTemplate) {
+                    $namespace = str_replace($this->customTemplateRoot, '', $pathName);
+
+                    if (
+                        !$customTemplate->isFile() ||
+                        substr(basename($pathName), 0, 1) === '.' ||
+                        (!empty($name) && $name !== $namespace)
+                    ) {
+                        continue;
+                    }
+
+                    $data[$namespace] = [
+                        'id' => $namespace,
+                        'name' => $namespace,
+                        'custom' => 1,
+                    ];
                 }
-
-                $data[$namespace] = [
-                    'id' => $namespace,
-                    'name' => $namespace,
-                    'custom' => 1,
-                ];
             }
 
             ksort($data);
@@ -95,20 +102,18 @@ class TemplateManagerController extends AbstractController
         $path = $request->get('path');
         $data = [];
 
-        if (!empty($path) && !empty($this->bundles['DneTemplateManager'])) {
+        if (!empty($path) && !empty($this->customTemplateRoot)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
-            $baseTemplateRoot = $this->bundles['Storefront']['path'] . '/Resources/views/storefront';
-            $customTemplatesRoot = $this->bundles['DneTemplateManager']['path'] . '/Resources/views/storefront';
 
-            if (file_exists($customTemplatesRoot . $path)) {
-                $content = file_get_contents($customTemplatesRoot . $path);
+            if (file_exists($this->customTemplateRoot . $path)) {
+                $content = file_get_contents($this->customTemplateRoot . $path);
             } else {
                 $content = "{% sw_extends '@Storefront/storefront" . $path . "' %}";
             }
 
             $originalContent = '';
-            if (file_exists($baseTemplateRoot . $path)) {
-                $originalContent = file_get_contents($baseTemplateRoot . $path);
+            if (file_exists($this->baseTemplateRoot . $path)) {
+                $originalContent = file_get_contents($this->baseTemplateRoot . $path);
             }
 
             $data = [
@@ -130,18 +135,18 @@ class TemplateManagerController extends AbstractController
         $path = $request->get('path');
         $content = $request->get('content', '');
 
-        if (!empty($path) && !empty($this->bundles['DneTemplateManager'])) {
+        if (!empty($path) && !empty($this->customTemplateRoot)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
-            $customTemplatesRoot = $this->bundles['DneTemplateManager']['path'] . '/Resources/views/storefront';
 
-            $filePath = $customTemplatesRoot . $path;
+            $filePath = $this->customTemplateRoot . $path;
 
             if (pathinfo($filePath, PATHINFO_EXTENSION) === 'twig') {
                 $dirname = dirname($filePath);
 
                 if (!is_dir($dirname)) {
-                    $dirParts = str_replace($customTemplatesRoot, '', $dirname);
-                    $buildPath = rtrim($customTemplatesRoot, '/');
+                    $pluginDir = str_replace('/.customTemplate/storefront', '', $this->customTemplateRoot);
+                    $dirParts = str_replace($pluginDir, '', $dirname);
+                    $buildPath = rtrim($pluginDir, '/');
                     foreach (explode('/', $dirParts) as $dirPart) {
                         $buildPath .= '/' . $dirPart;
                         if (!is_dir($buildPath)) {
@@ -165,13 +170,12 @@ class TemplateManagerController extends AbstractController
     {
         $path = $request->get('path');
 
-        if (!empty($path) && !empty($this->bundles['DneTemplateManager'])) {
+        if (!empty($path) && !empty($this->customTemplateRoot)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
-            $customTemplatesRoot = $this->bundles['DneTemplateManager']['path'] . '/Resources/views/storefront';
 
-            $filePath = $customTemplatesRoot . $path;
+            $filePath = $this->customTemplateRoot . $path;
             if (file_exists($filePath) && pathinfo($filePath, PATHINFO_EXTENSION) === 'twig') {
-                unlink($customTemplatesRoot . $path);
+                unlink($this->customTemplateRoot . $path);
             }
         }
 
