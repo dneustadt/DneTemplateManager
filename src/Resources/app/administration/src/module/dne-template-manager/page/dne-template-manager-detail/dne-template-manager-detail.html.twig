@@ -46,6 +46,9 @@
             <sw-code-editor
                 :label="$t('dne-template-manager.originalContentLabel')"
                 :disabled="true"
+                :editorConfig="{
+                    readOnly: true
+                }"
                 v-model="item.originalContent">
             </sw-code-editor>
         </sw-card>
