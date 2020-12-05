@@ -1,6 +1,7 @@
 {
     "dne-template-manager": {
         "title": "Custom Template Manager",
+        "menuEntry": "Custom Template",
         "nameLabel": "Path",
         "searchLabel": "Search",
         "contentLabel": "Custom template content for",
@@ -9,6 +10,7 @@
         "deleteButton": "Delete",
         "cancelButton": "Cancel",
         "deleteWarning": "Are you sure you want to delete the custom template?",
-        "donateText": "Click here to support this free extension or if you want to buy me a cup of coffee"
+        "donateText": "Click here to support this free extension or if you want to buy me a cup of coffee",
+        "credit": "David Neustadt - kontakt@davidneustadt.de - https://neustadt.dev"
     }
 }

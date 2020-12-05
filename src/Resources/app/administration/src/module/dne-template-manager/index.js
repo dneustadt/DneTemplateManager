@@ -25,7 +25,7 @@ Module.register('dne-template-manager', {
     },
 
     navigation: [{
-        label: 'dne-template-manager.title',
+        label: 'dne-template-manager.menuEntry',
         color: '#acd200',
         path: 'dne.template.manager.list',
         icon: 'default-web-layout',

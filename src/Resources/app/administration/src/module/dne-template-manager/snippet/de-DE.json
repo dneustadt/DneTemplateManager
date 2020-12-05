@@ -1,6 +1,7 @@
 {
     "dne-template-manager": {
         "title": "Custom Template Manager",
+        "menuEntry": "Custom Template",
         "nameLabel": "Pfad",
         "searchLabel": "Suchen",
         "contentLabel": "Custom Template Inhalt von",
@@ -9,6 +10,7 @@
         "deleteButton": "Löschen",
         "cancelButton": "Abbreichen",
         "deleteWarning": "Sind Sie sicher, dass Sie das Custom Template endgültig löschen möchten?",
-        "donateText": "Klicken Sie hier, wenn Sie dieses kostenlose Plugin unterstützen oder mir einen Kaffee ausgeben möchten"
+        "donateText": "Klicken Sie hier, wenn Sie dieses kostenlose Plugin unterstützen oder mir einen Kaffee ausgeben möchten",
+        "credit": "David Neustadt - kontakt@davidneustadt.de - https://neustadt.dev"
     }
 }
