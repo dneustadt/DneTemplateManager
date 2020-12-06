@@ -50,8 +50,7 @@ class TemplateManagerController extends AbstractController
 
                 if (
                     !$baseTemplate->isFile() ||
-                    pathinfo($pathName, PATHINFO_EXTENSION) != 'twig' ||
-                    (!empty($name) && $name !== $namespace)
+                    pathinfo($pathName, PATHINFO_EXTENSION) !== 'twig'
                 ) {
                     continue;
                 }
@@ -73,8 +72,7 @@ class TemplateManagerController extends AbstractController
 
                     if (
                         !$customTemplate->isFile() ||
-                        substr(basename($pathName), 0, 1) === '.' ||
-                        (!empty($name) && $name !== $namespace)
+                        pathinfo($pathName, PATHINFO_EXTENSION) !== 'twig'
                     ) {
                         continue;
                     }
