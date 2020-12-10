@@ -30,7 +30,7 @@ Clone this repository into a folder called **DneTemplateManager** within the **c
 
 Usage
 =====
-The module will be accessible in backend by a new menu entry called _Custom Template Manager_.
+The module will be accessible in backend by a new sub-menu entry called _Custom Template Manager_ under _Settings_.
 
 Regarding proper syntax and inheritance within template extensions please see the
 [official documentation](https://docs.shopware.com/en/shopware-platform-dev-en/developer-guide/storefront/templates?category=shopware-platform-dev-en/developer-guide/storefront).
