@@ -19,16 +19,22 @@ class TemplateManagerController extends AbstractController
     private $baseTemplateRoot = null;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $customTemplateRoot = null;
+    private $pluginDir;
 
-    public function __construct($bundles)
+    /**
+     * @var string
+     */
+    private $customTemplateRoot;
+
+    public function __construct($bundles, string $projectDir)
     {
-        if (!empty($bundles['Storefront']) && !empty($bundles['DneTemplateManager'])) {
+        if (!empty($bundles['Storefront'])) {
             $this->baseTemplateRoot = $bundles['Storefront']['path'] . '/Resources/views/storefront';
-            $this->customTemplateRoot = $bundles['DneTemplateManager']['path'] . '/../../.customTemplate/storefront';
         }
+        $this->pluginDir = $projectDir . '/custom/plugins';
+        $this->customTemplateRoot = $this->pluginDir . '/.customTemplate/storefront';
     }
 
     /**
@@ -38,7 +44,7 @@ class TemplateManagerController extends AbstractController
     {
         $data = [];
 
-        if (!empty($this->baseTemplateRoot) && !empty($this->customTemplateRoot)) {
+        if (!empty($this->baseTemplateRoot)) {
             $baseTemplates = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($this->baseTemplateRoot)
             );
@@ -100,7 +106,7 @@ class TemplateManagerController extends AbstractController
         $path = $request->get('path');
         $data = [];
 
-        if (!empty($path) && !empty($this->customTemplateRoot)) {
+        if (!empty($path)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
 
             if (file_exists($this->customTemplateRoot . $path)) {
@@ -132,8 +138,9 @@ class TemplateManagerController extends AbstractController
     {
         $path = $request->get('path');
         $content = $request->get('content', '');
+        $cacheWarmup = false;
 
-        if (!empty($path) && !empty($this->customTemplateRoot)) {
+        if (!empty($path)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
 
             $filePath = $this->customTemplateRoot . $path;
@@ -141,10 +148,13 @@ class TemplateManagerController extends AbstractController
             if (pathinfo($filePath, PATHINFO_EXTENSION) === 'twig') {
                 $dirname = dirname($filePath);
 
+                if (!file_exists($this->customTemplateRoot)) {
+                    $cacheWarmup = true;
+                }
+
                 if (!is_dir($dirname)) {
-                    $pluginDir = str_replace('/.customTemplate/storefront', '', $this->customTemplateRoot);
-                    $dirParts = str_replace($pluginDir, '', $dirname);
-                    $buildPath = rtrim($pluginDir, '/');
+                    $dirParts = str_replace($this->pluginDir, '', $dirname);
+                    $buildPath = rtrim($this->pluginDir, '/');
                     foreach (explode('/', $dirParts) as $dirPart) {
                         $buildPath .= '/' . $dirPart;
                         if (!is_dir($buildPath)) {
@@ -157,7 +167,7 @@ class TemplateManagerController extends AbstractController
             }
         }
 
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse(['success' => true, 'cacheWarmup' => $cacheWarmup]);
     }
 
 
@@ -168,7 +178,7 @@ class TemplateManagerController extends AbstractController
     {
         $path = $request->get('path');
 
-        if (!empty($path) && !empty($this->customTemplateRoot)) {
+        if (!empty($path)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
 
             $filePath = $this->customTemplateRoot . $path;
@@ -177,6 +187,6 @@ class TemplateManagerController extends AbstractController
             }
         }
 
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse(['success' => true, 'cacheWarmup' => false]);
     }
 }

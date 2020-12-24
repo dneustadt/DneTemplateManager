@@ -10,16 +10,14 @@ class ThemeLoaderCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $fileSystemLoader = $container->findDefinition('twig.loader.native_filesystem');
-        $bundles = $container->getParameter('kernel.bundles_metadata');
+        $projectDir = $container->getParameter('kernel.project_dir');
+        $directory = $projectDir . '/custom/plugins/.customTemplate';
 
-        if (!empty($bundles['DneTemplateManager'])) {
-            $directory = $bundles['DneTemplateManager']['path'] . '/../../.customTemplate';
-            if (!file_exists($directory)) {
-                return;
-            }
-
-            $fileSystemLoader->addMethodCall('addPath', [$directory]);
-            $fileSystemLoader->addMethodCall('addPath', [$directory, 'DneTemplateManager']);
+        if (!file_exists($directory)) {
+            return;
         }
+
+        $fileSystemLoader->addMethodCall('addPath', [$directory]);
+        $fileSystemLoader->addMethodCall('addPath', [$directory, 'DneTemplateManager']);
     }
 }

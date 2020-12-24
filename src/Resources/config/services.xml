@@ -7,6 +7,7 @@
     <services>
         <service id="Dne\TemplateManager\Api\TemplateManagerController" public="true">
             <argument>%kernel.bundles_metadata%</argument>
+            <argument>%kernel.project_dir%</argument>
         </service>
     </services>
 </container>
