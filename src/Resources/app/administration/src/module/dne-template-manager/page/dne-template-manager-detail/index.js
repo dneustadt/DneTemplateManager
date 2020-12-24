@@ -41,12 +41,14 @@ Component.register('dne-template-manager-detail', {
                 return;
             }
 
+            this.isLoading = true;
             this.httpClient.post(
                 '_action/dne-templatemanager/detail',
                 { path: path },
                 { headers: this.basicHeaders }
             ).then(({ data }) => {
                 this.item = data;
+                this.isLoading = false;
             });
         },
 
