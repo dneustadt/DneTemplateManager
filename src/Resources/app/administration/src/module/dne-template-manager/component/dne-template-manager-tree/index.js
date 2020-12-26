@@ -10,25 +10,40 @@ Component.register('dne-template-manager-tree', {
         return {
             items: {},
             isLoading: true,
-            searchText: ''
+            searchText: '',
+            editedOnly: false,
+            selection: null
         };
     },
 
     created() {
         this.loadItems();
 
-        this.$parent.$on('dne-template-manager-reload', () => {
+        this.$parent.$on('dne-template-manager-reload', (removeSelection) => {
             this.isLoading = true;
             this.loadItems();
+            if (removeSelection) {
+                this.selection = null;
+            }
         });
     },
 
     computed: {
         getItems() {
-            if (this.searchText.length) {
-                return Object.values(this.items).filter((item) => {
-                    return item.name.indexOf(this.searchText) !== -1;
-                });
+            if (this.searchText.length || this.editedOnly) {
+                let items = Object.values(this.items);
+                if (this.searchText.length) {
+                    items = items.filter((item) => {
+                        return item.name.indexOf(this.searchText) !== -1;
+                    });
+                }
+                if (this.editedOnly) {
+                    items = items.filter((item) => {
+                        return item.custom === 1;
+                    });
+                }
+
+                return items;
             }
 
             return Object.values(this.items);
@@ -39,6 +54,7 @@ Component.register('dne-template-manager-tree', {
                 dataIndex: 'name',
                 label: this.$t('dne-template-manager.nameLabel'),
                 allowResize: false,
+                sortable: false,
                 primary: true
             }]
         }
@@ -58,6 +74,7 @@ Component.register('dne-template-manager-tree', {
             });
         },
         changeItem(item) {
+            this.selection = item.id;
             this.$parent.$emit('dne-template-manager-id-change', item.id);
         }
     }

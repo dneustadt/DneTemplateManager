@@ -17,6 +17,7 @@
             </sw-button>
 
             <sw-button
+                v-if="item.custom === 1"
                 :isLoading="isLoading"
                 variant="secondary"
                 @click="deleteModal = true">

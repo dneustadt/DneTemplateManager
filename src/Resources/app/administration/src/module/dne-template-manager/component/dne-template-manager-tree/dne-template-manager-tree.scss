@@ -1,10 +1,20 @@
 .dne-template-manager {
     .sw-data-grid__cell-content {
-        padding: 0;
+        padding: 0!important;
         a {
             display: block;
             width: 100%;
             padding: 10px 20px;
+            &.sw-button-active {
+                background: #189eff;
+                color: #ffffff;
+                &:hover {
+                    color: #ffffff!important;
+                }
+            }
+            &.is-custom {
+                font-weight: bold;
+            }
         }
     }
     .sw-data-grid__header {
@@ -13,6 +23,10 @@
         }
         .sw-field {
             width: 200px;
+        }
+        .sw-data-grid__cell--sortable:hover {
+            cursor: auto;
+            background-color: inherit;
         }
     }
 }

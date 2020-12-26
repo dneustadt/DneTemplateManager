@@ -109,21 +109,26 @@ class TemplateManagerController extends AbstractController
         if (!empty($path)) {
             $path = str_replace(\DIRECTORY_SEPARATOR . '..', '', $path);
 
-            if (file_exists($this->customTemplateRoot . $path)) {
-                $content = file_get_contents($this->customTemplateRoot . $path);
+            $isCustom = 0;
+            $customPath = $this->customTemplateRoot . $path;
+            if (file_exists($customPath) && pathinfo($customPath, PATHINFO_EXTENSION) === 'twig') {
+                $content = file_get_contents($customPath);
+                $isCustom = 1;
             } else {
                 $content = "{% sw_extends '@Storefront/storefront" . $path . "' %}";
             }
 
             $originalContent = '';
-            if (file_exists($this->baseTemplateRoot . $path)) {
-                $originalContent = file_get_contents($this->baseTemplateRoot . $path);
+            $originalPath = $this->baseTemplateRoot . $path;
+            if (file_exists($originalPath) && pathinfo($originalPath, PATHINFO_EXTENSION) === 'twig') {
+                $originalContent = file_get_contents($originalPath);
             }
 
             $data = [
                 'path' => $path,
                 'content' => $content,
                 'originalContent' => $originalContent,
+                'custom' => $isCustom,
             ];
         }
 

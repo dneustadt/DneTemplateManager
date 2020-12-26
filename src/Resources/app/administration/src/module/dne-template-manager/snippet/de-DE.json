@@ -4,6 +4,7 @@
         "menuEntry": "Custom Template",
         "nameLabel": "Pfad",
         "searchLabel": "Suchen",
+        "editedOnlyLabel": "nur bearbeitete",
         "contentLabel": "Custom Template Inhalt von",
         "originalContentLabel": "Original Template Inhalt",
         "saveButton": "Speichern",

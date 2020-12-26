@@ -12,23 +12,24 @@
     <template #column-name="{ item }">
         <a
             href="#"
+            :class="{
+                'sw-button-active': selection === item.id,
+                'is-custom': item.custom === 1
+            }"
             @click.prevent="changeItem(item)"
         >
-            <template v-if="item.custom === 1">
-                <sw-icon
-                    name="default-documentation-file"
-                    color="#007bff"
-                    size="14">
-                </sw-icon>
-                <strong>{{ item.name }}</strong>
-            </template>
-            <template v-else>
-                <sw-icon
-                    name="default-web-loading-star"
-                    size="14">
-                </sw-icon>
-                {{ item.name }}
-            </template>
+            <sw-icon
+                v-if="item.custom === 1"
+                name="default-documentation-file"
+                :color="selection === item.id ? '#ffffff' : '#007bff'"
+                size="14">
+            </sw-icon>
+            <sw-icon
+                v-else
+                name="default-web-loading-star"
+                size="14">
+            </sw-icon>
+            {{ item.name }}
         </a>
     </template>
     <template #column-label-name>
@@ -40,5 +41,9 @@
             type="text"
             :placeholder="$t('dne-template-manager.searchLabel')"
         ></sw-field>
+        <sw-switch-field
+            v-model="editedOnly"
+            :label="$t('dne-template-manager.editedOnlyLabel')"
+        ></sw-switch-field>
     </template>
 </sw-data-grid>

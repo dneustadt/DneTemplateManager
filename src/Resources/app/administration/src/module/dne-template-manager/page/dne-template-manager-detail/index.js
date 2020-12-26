@@ -74,10 +74,12 @@ Component.register('dne-template-manager-detail', {
                 const cacheEndpoint = data.cacheWarmup ? 'cache_warmup' : 'cache';
                 this.httpClient.delete(`/_action/${cacheEndpoint}`, { headers: this.basicHeaders }).then(() => {
                     this.isLoading = false;
-                    this.$parent.$emit('dne-template-manager-reload');
+                    this.$parent.$emit('dne-template-manager-reload', endpoint === 'delete');
 
                     if (endpoint === 'delete') {
                         this.item = null;
+                    } else {
+                        this.item.custom = 1;
                     }
                 });
             }).catch((exception) => {
