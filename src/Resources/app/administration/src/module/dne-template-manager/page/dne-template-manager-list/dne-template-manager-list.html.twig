@@ -1,12 +1,16 @@
 {% block dne_template_manager_list %}
     <sw-page class="dne-template-manager-list">
         <template #side-content>
-            <dne-template-manager-tree></dne-template-manager-tree>
+            <dne-template-manager-tree
+                @dns-template-manager-documents="(value) => isDocuments = value"
+            ></dne-template-manager-tree>
         </template>
 
         <template slot="content">
             {% block dne_template_manager_list_content %}
-                <dne-template-manager-detail></dne-template-manager-detail>
+                <dne-template-manager-detail
+                    :is-documents="isDocuments"
+                ></dne-template-manager-detail>
             {% endblock %}
         </template>
     </sw-page>

@@ -1,49 +1,68 @@
-<sw-data-grid
-        :dataSource="getItems"
-        :columns="columns"
-        :fullPage="false"
-        :showSettings="false"
-        :showSelection="false"
-        :showActions="false"
-        :isLoading="isLoading"
-        :allowColumnEdit="false"
-        :allowInlineEdit="false"
-        class="dne-template-manager">
-    <template #column-name="{ item }">
-        <a
-            href="#"
-            :class="{
-                'sw-button-active': selection === item.id,
-                'is-custom': item.custom === 1
-            }"
-            @click.prevent="changeItem(item)"
-        >
-            <sw-icon
-                v-if="item.custom === 1"
-                name="default-documentation-file"
-                :color="selection === item.id ? '#ffffff' : '#007bff'"
-                size="14">
-            </sw-icon>
-            <sw-icon
-                v-else
-                name="default-web-loading-star"
-                size="14">
-            </sw-icon>
-            {{ item.name }}
-        </a>
+<sw-tabs>
+    <sw-tabs-item
+        :active="!isDocuments"
+        :disabled="tabsDisabled || isLoading"
+        @click="isDocuments = false"
+    >
+        Storefront
+    </sw-tabs-item>
+    <sw-tabs-item
+        :active="isDocuments"
+        :disabled="tabsDisabled || isLoading"
+        @click="isDocuments = true"
+    >
+        Dokumente
+    </sw-tabs-item>
+
+    <template slot="content">
+        <sw-data-grid
+                :dataSource="getItems"
+                :columns="columns"
+                :fullPage="false"
+                :showSettings="false"
+                :showSelection="false"
+                :showActions="false"
+                :isLoading="isLoading"
+                :allowColumnEdit="false"
+                :allowInlineEdit="false"
+                class="dne-template-manager">
+            <template #column-name="{ item }">
+                <a
+                    href="#"
+                    :class="{
+                        'sw-button-active': selection === item.id,
+                        'is-custom': item.custom === 1
+                    }"
+                    @click.prevent="changeItem(item)"
+                >
+                    <sw-icon
+                        v-if="item.custom === 1"
+                        name="default-documentation-file"
+                        :color="selection === item.id ? '#ffffff' : '#007bff'"
+                        size="14">
+                    </sw-icon>
+                    <sw-icon
+                        v-else
+                        name="default-web-loading-star"
+                        size="14">
+                    </sw-icon>
+                    {{ item.name }}
+                </a>
+            </template>
+            <template #column-label-name>
+                <span>
+                    {{ $t('dne-template-manager.nameLabel') }}
+                </span>
+                <sw-field
+                    v-model="searchText"
+                    type="text"
+                    :placeholder="$t('dne-template-manager.searchLabel')"
+                ></sw-field>
+                <sw-switch-field
+                    v-model="editedOnly"
+                    :label="$t('dne-template-manager.editedOnlyLabel')"
+                ></sw-switch-field>
+            </template>
+        </sw-data-grid>
     </template>
-    <template #column-label-name>
-        <span>
-            {{ $t('dne-template-manager.nameLabel') }}
-        </span>
-        <sw-field
-            v-model="searchText"
-            type="text"
-            :placeholder="$t('dne-template-manager.searchLabel')"
-        ></sw-field>
-        <sw-switch-field
-            v-model="editedOnly"
-            :label="$t('dne-template-manager.editedOnlyLabel')"
-        ></sw-switch-field>
-    </template>
-</sw-data-grid>
+</sw-tabs>

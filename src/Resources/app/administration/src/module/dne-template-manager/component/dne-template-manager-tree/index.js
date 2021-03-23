@@ -10,8 +10,10 @@ Component.register('dne-template-manager-tree', {
         return {
             items: {},
             isLoading: true,
+            tabsDisabled: false,
             searchText: '',
             editedOnly: false,
+            isDocuments: false,
             selection: null
         };
     },
@@ -25,6 +27,10 @@ Component.register('dne-template-manager-tree', {
             if (removeSelection) {
                 this.selection = null;
             }
+        });
+
+        this.$parent.$on('dne-template-manager-loading', (tabsDisabled) => {
+            this.tabsDisabled = tabsDisabled;
         });
     },
 
@@ -60,6 +66,16 @@ Component.register('dne-template-manager-tree', {
         }
     },
 
+    watch: {
+        isDocuments(value) {
+            this.isLoading = true;
+            this.loadItems();
+            this.selection = null;
+
+            this.$emit('dns-template-manager-documents', value);
+        }
+    },
+
     methods: {
         loadItems() {
             const httpClient = Shopware.Service('syncService').httpClient;
@@ -68,7 +84,12 @@ Component.register('dne-template-manager-tree', {
                 'Content-Type': 'application/json'
             };
 
-            httpClient.get('_action/dne-templatemanager/list', { headers: basicHeaders }).then(({ data }) => {
+            const params = {};
+            if (this.isDocuments) {
+                params.documents = true;
+            }
+
+            httpClient.get('_action/dne-templatemanager/list', { headers: basicHeaders, params: params }).then(({ data }) => {
                 this.items = data;
                 this.isLoading = false;
             });

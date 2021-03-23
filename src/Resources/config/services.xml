@@ -8,6 +8,7 @@
         <service id="Dne\TemplateManager\Api\TemplateManagerController" public="true">
             <argument>%kernel.bundles_metadata%</argument>
             <argument>%kernel.project_dir%</argument>
+            <argument type="service" id="Symfony\Component\HttpFoundation\RequestStack"/>
         </service>
     </services>
 </container>
