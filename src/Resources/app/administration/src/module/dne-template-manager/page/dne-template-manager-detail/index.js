@@ -15,6 +15,10 @@ Component.register('dne-template-manager-detail', {
         };
     },
 
+    props: {
+        isDocuments: Boolean
+    },
+
     data() {
         return {
             httpClient: null,
@@ -35,17 +39,31 @@ Component.register('dne-template-manager-detail', {
         };
     },
 
+    watch: {
+        isDocuments() {
+            this.item = null;
+        },
+        isLoading(value) {
+            this.$parent.$emit('dne-template-manager-loading', value);
+        }
+    },
+
     methods: {
         setItem(path) {
             if (!path) {
                 return;
             }
 
+            const params = {};
+            if (this.isDocuments) {
+                params.documents = true;
+            }
+
             this.isLoading = true;
             this.httpClient.post(
                 '_action/dne-templatemanager/detail',
                 { path: path },
-                { headers: this.basicHeaders }
+                { headers: this.basicHeaders, params: params }
             ).then(({ data }) => {
                 this.item = data;
                 this.isLoading = false;
@@ -66,9 +84,15 @@ Component.register('dne-template-manager-detail', {
 
         doRequest(endpoint) {
             this.isLoading = true;
+
+            const post = { path: this.item.path, content: this.item.content };
+            if (this.isDocuments) {
+                post.documents = true;
+            }
+
             this.httpClient.post(
                 `_action/dne-templatemanager/${endpoint}`,
-                { path: this.item.path, content: this.item.content },
+                post,
                 { headers: this.basicHeaders }
             ).then(({ data }) => {
                 const cacheEndpoint = data.cacheWarmup ? 'cache_warmup' : 'cache';

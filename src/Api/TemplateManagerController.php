@@ -6,6 +6,7 @@ use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,13 +29,27 @@ class TemplateManagerController extends AbstractController
      */
     private $customTemplateRoot;
 
-    public function __construct($bundles, string $projectDir)
+    /**
+     * @var bool
+     */
+    private $isDocumentRequest;
+
+    public function __construct($bundles, string $projectDir, RequestStack $requestStack)
     {
-        if (!empty($bundles['Storefront'])) {
+        $this->isDocumentRequest = $requestStack->getCurrentRequest() ?
+            ($requestStack->getCurrentRequest()->get('documents') !== null) :
+            false;
+
+        if (!empty($bundles['Storefront']) && !$this->isDocumentRequest) {
             $this->baseTemplateRoot = $bundles['Storefront']['path'] . '/Resources/views/storefront';
         }
+        if (!empty($bundles['Framework']) && $this->isDocumentRequest) {
+            $this->baseTemplateRoot = $bundles['Framework']['path'] . '/Resources/views/documents';
+        }
+
         $this->pluginDir = $projectDir . '/custom/plugins';
-        $this->customTemplateRoot = $this->pluginDir . '/.customTemplate/storefront';
+        $customTemplateBase = $this->isDocumentRequest ? 'documents' : 'storefront';
+        $this->customTemplateRoot = $this->pluginDir . '/.customTemplate/' . $customTemplateBase;
     }
 
     /**
@@ -114,6 +129,8 @@ class TemplateManagerController extends AbstractController
             if (file_exists($customPath) && pathinfo($customPath, PATHINFO_EXTENSION) === 'twig') {
                 $content = file_get_contents($customPath);
                 $isCustom = 1;
+            } elseif ($this->isDocumentRequest) {
+                $content = "{% sw_extends '@Framework/documents" . $path . "' %}";
             } else {
                 $content = "{% sw_extends '@Storefront/storefront" . $path . "' %}";
             }
