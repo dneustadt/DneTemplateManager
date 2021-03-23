@@ -2,6 +2,8 @@
     "dne-template-manager": {
         "title": "Custom Template Manager",
         "menuEntry": "Custom Template",
+        "storefrontTab": "Verkaufskanal",
+        "documentsTab": "Dokumente",
         "nameLabel": "Pfad",
         "searchLabel": "Suchen",
         "editedOnlyLabel": "nur bearbeitete",

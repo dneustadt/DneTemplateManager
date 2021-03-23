@@ -4,14 +4,14 @@
         :disabled="tabsDisabled || isLoading"
         @click="isDocuments = false"
     >
-        Storefront
+        {{ $t('dne-template-manager.storefrontTab') }}
     </sw-tabs-item>
     <sw-tabs-item
         :active="isDocuments"
         :disabled="tabsDisabled || isLoading"
         @click="isDocuments = true"
     >
-        Dokumente
+        {{ $t('dne-template-manager.documentsTab') }}
     </sw-tabs-item>
 
     <template slot="content">
