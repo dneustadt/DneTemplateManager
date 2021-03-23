@@ -1,11 +1,11 @@
 {
     "name": "dne/template-manager",
     "description": "Custom Template Manager",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "require": {
-        "shopware/core": "~v6.3.0"
+        "shopware/core": "~v6.4.0"
     },
     "authors": [
         {
