@@ -15,5 +15,12 @@
         "deleteWarning": "Are you sure you want to delete the custom template?",
         "donateText": "Click here to support this free extension or if you want to buy me a cup of coffee",
         "credit": "David Neustadt - kontakt@davidneustadt.de - https://neustadt.dev"
+    },
+    "sw-privileges": {
+        "permissions": {
+            "dne_template_manager": {
+                "label": "Custom Template"
+            }
+        }
     }
 }

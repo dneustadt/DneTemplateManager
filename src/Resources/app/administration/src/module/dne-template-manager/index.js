@@ -1,6 +1,7 @@
 import './component/dne-template-manager-tree';
 import './page/dne-template-manager-list';
 import './page/dne-template-manager-detail';
+import './acl';
 import deDE from './snippet/de-DE.json';
 import enGB from './snippet/en-GB.json';
 
@@ -20,14 +21,17 @@ Module.register('dne-template-manager', {
     routes: {
         list: {
             component: 'dne-template-manager-list',
-            path: 'list'
+            path: 'list',
+            meta: {
+                privilege: 'dne_template_manager.viewer'
+            }
         }
     },
 
     navigation: [{
         label: 'dne-template-manager.menuEntry',
         path: 'dne.template.manager.list',
-        parent: 'sw-settings',
+        parent: 'sw-extension',
         position: 100
     }]
 });

@@ -15,5 +15,12 @@
         "deleteWarning": "Sind Sie sicher, dass Sie das Custom Template endgültig löschen möchten?",
         "donateText": "Klicken Sie hier, wenn Sie dieses kostenlose Plugin unterstützen oder mir einen Kaffee ausgeben möchten",
         "credit": "David Neustadt - kontakt@davidneustadt.de - https://neustadt.dev"
+    },
+    "sw-privileges": {
+        "permissions": {
+            "dne_template_manager": {
+                "label": "Custom Template"
+            }
+        }
     }
 }
