@@ -1,11 +1,8 @@
 Template Manager for Shopware 6
 =====
-[![Donate](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=88UMDD53QSYK6&source=url)
 
 This plugin for [Shopware 6](https://www.shopware.de) features a template code editor to easily extend existing storefront
 `.twig` templates.
-
-_If you want to buy me a cup of coffee or support the development of this free extension, feel free to donate :)_
 
 The plugin offers the following features:
 
@@ -19,8 +16,8 @@ The plugin offers the following features:
 Requirements
 -----
 
-1.0.0
-* Shopware >= 6.3
+1.1.2
+* Shopware >= 6.4
 
 Installation
 ====

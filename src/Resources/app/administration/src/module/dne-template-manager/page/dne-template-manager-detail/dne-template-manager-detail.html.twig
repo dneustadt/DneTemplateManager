@@ -11,6 +11,7 @@
 
             <sw-button
                     :isLoading="isLoading"
+                    :disabled="item.custom === 1 ? !acl.can('dne_template_manager.editor') : !acl.can('dne_template_manager.creator')"
                     variant="primary"
                     @click="onClickSave">
                 {{ $t('dne-template-manager.saveButton') }}
@@ -19,6 +20,7 @@
             <sw-button
                 v-if="item.custom === 1"
                 :isLoading="isLoading"
+                :disabled="!acl.can('dne_template_manager.deleter')"
                 variant="secondary"
                 @click="deleteModal = true">
                 {{ $t('dne-template-manager.deleteButton') }}
@@ -54,10 +56,7 @@
             </sw-code-editor>
         </sw-card>
         <sw-card>
-            <a href="https://github.com/dneustadt/DneTemplateManager" target="_blank" rel="noopener">
-                {{ $t('dne-template-manager.donateText') }}
-            </a>
-            <p>{{ $t('dne-template-manager.credit') }}</p>
+            <p>{{ $t('dne-template-manager.migrationNotice') }}</p>
         </sw-card>
     </sw-card-view>
 {% endblock %}

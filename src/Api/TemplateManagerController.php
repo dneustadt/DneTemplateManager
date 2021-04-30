@@ -53,7 +53,7 @@ class TemplateManagerController extends AbstractController
     }
 
     /**
-     * @Route("/api/v{version}/_action/dne-templatemanager/list", name="api.action.core.dne-templatemanager.list", methods={"GET"})
+     * @Route("/api/_action/dne-templatemanager/list", name="api.action.core.dne-templatemanager.list", methods={"GET"})
      */
     public function list(): JsonResponse
     {
@@ -114,7 +114,7 @@ class TemplateManagerController extends AbstractController
     }
 
     /**
-     * @Route("/api/v{version}/_action/dne-templatemanager/detail", name="api.action.core.dne-templatemanager.detail", methods={"POST"})
+     * @Route("/api/_action/dne-templatemanager/detail", name="api.action.core.dne-templatemanager.detail", methods={"POST"})
      */
     public function detail(Request $request): JsonResponse
     {
@@ -152,9 +152,8 @@ class TemplateManagerController extends AbstractController
         return new JsonResponse($data);
     }
 
-
     /**
-     * @Route("/api/v{version}/_action/dne-templatemanager/save", name="api.action.core.dne-templatemanager.save", methods={"POST"})
+     * @Route("/api/_action/dne-templatemanager/save", name="api.action.core.dne-templatemanager.save", methods={"POST"})
      */
     public function save(Request $request): JsonResponse
     {
@@ -192,9 +191,8 @@ class TemplateManagerController extends AbstractController
         return new JsonResponse(['success' => true, 'cacheWarmup' => $cacheWarmup]);
     }
 
-
     /**
-     * @Route("/api/v{version}/_action/dne-templatemanager/delete", name="api.action.core.dne-templatemanager.delete", methods={"POST"})
+     * @Route("/api/_action/dne-templatemanager/delete", name="api.action.core.dne-templatemanager.delete", methods={"POST"})
      */
     public function delete(Request $request): JsonResponse
     {

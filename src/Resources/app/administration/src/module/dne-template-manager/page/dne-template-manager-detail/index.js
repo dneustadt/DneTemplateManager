@@ -5,6 +5,10 @@ const { Component, Mixin } = Shopware;
 Component.register('dne-template-manager-detail', {
     template,
 
+    inject: [
+        'acl'
+    ],
+
     mixins: [
         Mixin.getByName('notification')
     ],
