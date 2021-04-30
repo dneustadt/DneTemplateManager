@@ -13,8 +13,7 @@
         "deleteButton": "Löschen",
         "cancelButton": "Abbreichen",
         "deleteWarning": "Sind Sie sicher, dass Sie das Custom Template endgültig löschen möchten?",
-        "donateText": "Klicken Sie hier, wenn Sie dieses kostenlose Plugin unterstützen oder mir einen Kaffee ausgeben möchten",
-        "credit": "David Neustadt - kontakt@davidneustadt.de - https://neustadt.dev"
+        "migrationNotice": "HINWEIS: Zukünftige Versionen dieses Plugins werden über das Friends Of Shopware Entwicklerkollektiv im Shopware Store bereitgestellt."
     },
     "sw-privileges": {
         "permissions": {
