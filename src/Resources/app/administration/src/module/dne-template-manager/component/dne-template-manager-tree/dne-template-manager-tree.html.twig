@@ -37,13 +37,13 @@
                 >
                     <sw-icon
                         v-if="item.custom === 1"
-                        name="default-documentation-file"
+                        name="regular-file"
                         :color="selection === item.id ? '#ffffff' : '#007bff'"
                         size="14">
                     </sw-icon>
                     <sw-icon
                         v-else
-                        name="default-web-loading-star"
+                        name="regular-chevron-right"
                         size="14">
                     </sw-icon>
                     {{ item.name }}

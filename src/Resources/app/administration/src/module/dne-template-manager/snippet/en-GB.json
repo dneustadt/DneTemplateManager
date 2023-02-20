@@ -12,8 +12,7 @@
         "saveButton": "Save",
         "deleteButton": "Delete",
         "cancelButton": "Cancel",
-        "deleteWarning": "Are you sure you want to delete the custom template?",
-        "migrationNotice": "NOTICE: Future versions of this plugins will be provided by the developer collective Friends Of Shopware within the Shopware Store"
+        "deleteWarning": "Are you sure you want to delete the custom template?"
     },
     "sw-privileges": {
         "permissions": {

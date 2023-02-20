@@ -9,7 +9,7 @@ const { Module } = Shopware;
 
 Module.register('dne-template-manager', {
     color: '#ff3d58',
-    icon: 'default-shopping-paper-bag-product',
+    icon: 'regular-code',
     title: 'dne-template-manager.title',
     description: '',
 

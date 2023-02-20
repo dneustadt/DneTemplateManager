@@ -2,7 +2,6 @@
 
 namespace Dne\TemplateManager\Api;
 
-use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,35 +9,21 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"api"})
+ * @Route(defaults={"_routeScope"={"api"}})
  */
 class TemplateManagerController extends AbstractController
 {
-    /**
-     * @var string|null
-     */
-    private $baseTemplateRoot = null;
+    private ?string $baseTemplateRoot = null;
 
-    /**
-     * @var string
-     */
-    private $pluginDir;
+    private string $pluginDir;
 
-    /**
-     * @var string
-     */
-    private $customTemplateRoot;
+    private string $customTemplateRoot;
 
-    /**
-     * @var bool
-     */
-    private $isDocumentRequest;
+    private bool $isDocumentRequest;
 
     public function __construct($bundles, string $projectDir, RequestStack $requestStack)
     {
-        $this->isDocumentRequest = $requestStack->getCurrentRequest() ?
-            ($requestStack->getCurrentRequest()->get('documents') !== null) :
-            false;
+        $this->isDocumentRequest = $requestStack->getCurrentRequest() && $requestStack->getCurrentRequest()->get('documents') !== null;
 
         if (!empty($bundles['Storefront']) && !$this->isDocumentRequest) {
             $this->baseTemplateRoot = $bundles['Storefront']['path'] . '/Resources/views/storefront';

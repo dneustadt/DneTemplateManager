@@ -16,6 +16,9 @@ The plugin offers the following features:
 Requirements
 -----
 
+2.0.0
+* Shopware >= 6.5
+
 1.1.2
 * Shopware >= 6.4
 
