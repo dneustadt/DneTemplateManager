@@ -6,7 +6,8 @@ Component.register('dne-template-manager-detail', {
     template,
 
     inject: [
-        'acl'
+        'acl',
+        'cacheApiService',
     ],
 
     mixins: [
@@ -34,8 +35,6 @@ Component.register('dne-template-manager-detail', {
     },
 
     created() {
-        this.$parent.$on('dne-template-manager-id-change', this.setItem);
-
         this.httpClient = Shopware.Service('syncService').httpClient;
         this.basicHeaders = {
             Authorization: `Bearer ${Shopware.Context.api.authToken.access}`,
@@ -48,7 +47,7 @@ Component.register('dne-template-manager-detail', {
             this.item = null;
         },
         isLoading(value) {
-            this.$parent.$emit('dne-template-manager-loading', value);
+            this.$emit('dne-template-manager-loading', value);
         }
     },
 
@@ -98,11 +97,10 @@ Component.register('dne-template-manager-detail', {
                 `_action/dne-templatemanager/${endpoint}`,
                 post,
                 { headers: this.basicHeaders }
-            ).then(({ data }) => {
-                const cacheEndpoint = data.cacheWarmup ? 'cache_warmup' : 'cache';
-                this.httpClient.delete(`/_action/${cacheEndpoint}`, { headers: this.basicHeaders }).then(() => {
+            ).then(() => {
+                this.cacheApiService.clear().then(() => {
                     this.isLoading = false;
-                    this.$parent.$emit('dne-template-manager-reload', endpoint === 'delete');
+                    this.$emit('dne-template-manager-reload', endpoint === 'delete');
 
                     if (endpoint === 'delete') {
                         this.item = null;

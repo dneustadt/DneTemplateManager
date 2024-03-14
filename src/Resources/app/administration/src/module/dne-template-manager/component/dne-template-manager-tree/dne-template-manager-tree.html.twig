@@ -1,4 +1,4 @@
-<sw-tabs>
+<sw-tabs class="dne-template-manager-tree">
     <sw-tabs-item
         :active="!isDocuments"
         :disabled="tabsDisabled || isLoading"
@@ -24,8 +24,7 @@
                 :showActions="false"
                 :isLoading="isLoading"
                 :allowColumnEdit="false"
-                :allowInlineEdit="false"
-                class="dne-template-manager">
+                :allowInlineEdit="false">
             <template #column-name="{ item }">
                 <a
                     href="#"
@@ -53,13 +52,12 @@
                 <span>
                     {{ $t('dne-template-manager.nameLabel') }}
                 </span>
-                <sw-field
-                    v-model="searchText"
-                    type="text"
+                <sw-text-field
+                    v-model:value="searchText"
                     :placeholder="$t('dne-template-manager.searchLabel')"
-                ></sw-field>
+                ></sw-text-field>
                 <sw-switch-field
-                    v-model="editedOnly"
+                    v-model:value="editedOnly"
                     :label="$t('dne-template-manager.editedOnlyLabel')"
                 ></sw-switch-field>
             </template>

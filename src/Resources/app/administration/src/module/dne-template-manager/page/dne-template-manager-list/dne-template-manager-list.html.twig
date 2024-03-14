@@ -2,13 +2,18 @@
     <sw-page class="dne-template-manager-list">
         <template #side-content>
             <dne-template-manager-tree
-                @dns-template-manager-documents="(value) => isDocuments = value"
+                ref="tree"
+                @dne-template-manager-id-change="onIdChange"
+                @dne-template-manager-documents="(value) => isDocuments = value"
             ></dne-template-manager-tree>
         </template>
 
-        <template slot="content">
+        <template #content>
             {% block dne_template_manager_list_content %}
                 <dne-template-manager-detail
+                    ref="detail"
+                    @dne-template-manager-reload="onReload"
+                    @dne-template-manager-loading="onLoading"
                     :is-documents="isDocuments"
                 ></dne-template-manager-detail>
             {% endblock %}

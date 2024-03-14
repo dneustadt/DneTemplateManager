@@ -6,11 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * @Route(defaults={"_routeScope"={"api"}})
- */
+#[Route(defaults: ['_routeScope' => ['administration']])]
 class TemplateManagerController extends AbstractController
 {
     private ?string $baseTemplateRoot = null;
@@ -37,9 +35,7 @@ class TemplateManagerController extends AbstractController
         $this->customTemplateRoot = $this->pluginDir . '/.customTemplate/' . $customTemplateBase;
     }
 
-    /**
-     * @Route("/api/_action/dne-templatemanager/list", name="api.action.core.dne-templatemanager.list", methods={"GET"})
-     */
+    #[Route(path: '/api/_action/dne-templatemanager/list', name: 'api.action.core.dne-templatemanager.list', methods: ['GET'])]
     public function list(): JsonResponse
     {
         $data = [];
@@ -98,9 +94,7 @@ class TemplateManagerController extends AbstractController
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/api/_action/dne-templatemanager/detail", name="api.action.core.dne-templatemanager.detail", methods={"POST"})
-     */
+    #[Route(path: '/api/_action/dne-templatemanager/detail', name: 'api.action.core.dne-templatemanager.detail', methods: ['POST'])]
     public function detail(Request $request): JsonResponse
     {
         $path = $request->get('path');
@@ -137,9 +131,7 @@ class TemplateManagerController extends AbstractController
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/api/_action/dne-templatemanager/save", name="api.action.core.dne-templatemanager.save", methods={"POST"})
-     */
+    #[Route(path: '/api/_action/dne-templatemanager/save', name: 'api.action.core.dne-templatemanager.save', methods: ['POST'])]
     public function save(Request $request): JsonResponse
     {
         $path = $request->get('path');
@@ -176,9 +168,7 @@ class TemplateManagerController extends AbstractController
         return new JsonResponse(['success' => true, 'cacheWarmup' => $cacheWarmup]);
     }
 
-    /**
-     * @Route("/api/_action/dne-templatemanager/delete", name="api.action.core.dne-templatemanager.delete", methods={"POST"})
-     */
+    #[Route(path: '/api/_action/dne-templatemanager/delete', name: 'api.action.core.dne-templatemanager.delete', methods: ['POST'])]
     public function delete(Request $request): JsonResponse
     {
         $path = $request->get('path');

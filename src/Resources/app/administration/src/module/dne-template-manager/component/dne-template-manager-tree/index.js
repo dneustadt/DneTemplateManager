@@ -20,18 +20,6 @@ Component.register('dne-template-manager-tree', {
 
     created() {
         this.loadItems();
-
-        this.$parent.$on('dne-template-manager-reload', (removeSelection) => {
-            this.isLoading = true;
-            this.loadItems();
-            if (removeSelection) {
-                this.selection = null;
-            }
-        });
-
-        this.$parent.$on('dne-template-manager-loading', (tabsDisabled) => {
-            this.tabsDisabled = tabsDisabled;
-        });
     },
 
     computed: {
@@ -72,11 +60,23 @@ Component.register('dne-template-manager-tree', {
             this.loadItems();
             this.selection = null;
 
-            this.$emit('dns-template-manager-documents', value);
+            this.$emit('dne-template-manager-documents', value);
         }
     },
 
     methods: {
+        onReload(removeSelection) {
+            this.isLoading = true;
+            this.loadItems();
+            if (removeSelection) {
+                this.selection = null;
+            }
+        },
+
+        onLoading(tabsDisabled) {
+            this.tabsDisabled = tabsDisabled;
+        },
+
         loadItems() {
             const httpClient = Shopware.Service('syncService').httpClient;
             const basicHeaders = {
@@ -96,7 +96,7 @@ Component.register('dne-template-manager-tree', {
         },
         changeItem(item) {
             this.selection = item.id;
-            this.$parent.$emit('dne-template-manager-id-change', item.id);
+            this.$emit('dne-template-manager-id-change', item.id);
         }
     }
 });

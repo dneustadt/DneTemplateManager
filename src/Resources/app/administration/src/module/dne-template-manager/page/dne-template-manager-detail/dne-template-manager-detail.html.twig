@@ -6,7 +6,7 @@
                     name="content"
                     identifier="content"
                     completionMode="entity"
-                    v-model="item.content">
+                    v-model:value="item.content">
             </sw-code-editor>
 
             <sw-button
@@ -52,7 +52,7 @@
                 :editorConfig="{
                     readOnly: true
                 }"
-                v-model="item.originalContent">
+                v-model:value="item.originalContent">
             </sw-code-editor>
         </sw-card>
     </sw-card-view>
